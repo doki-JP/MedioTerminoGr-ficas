@@ -356,6 +356,7 @@
 "Assets/Scripts/Bullet.cs"
 "Assets/Scripts/EnemyShooting.cs"
 "Assets/Scripts/PlayerController.cs"
+"Assets/Scripts/ShootingManager.cs"
 -langversion:9.0
 /deterministic
 /optimize+
