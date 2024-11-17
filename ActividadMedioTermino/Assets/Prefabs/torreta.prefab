@@ -114,7 +114,7 @@ MonoBehaviour:
   proyectilPrefab: {fileID: 5257613980615583037, guid: f90db7df03f3e8e45b04cd88a2ef8a45, type: 3}
   puntoDeDisparo: {fileID: 3612123525023715848}
   velocidadProyectil: 50
-  tiempoVidaProyectil: 4.5
+  tiempoVidaProyectil: 2
 --- !u!4 &934613358268572630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d126d5672daa2664c99be83ffb9cc745, type: 3}

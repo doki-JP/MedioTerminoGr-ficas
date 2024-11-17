@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4239397760678039449}
   m_Layer: 0
   m_Name: bullet
-  m_TagString: Untagged
+  m_TagString: Bala
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,3 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502321f76f26b9749a7b042500f48e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocidad: 100
