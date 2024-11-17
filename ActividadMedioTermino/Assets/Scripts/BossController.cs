@@ -3,18 +3,17 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
-    public Vector3 startLeft = new Vector3(-103f, 2.78f, -119f); // Posición inicial a la izquierda
+    public Vector3 startLeft = new Vector3(-103f, -30f, -119f); // Posición inicial a la izquierda bajo tierra
     public Vector3 startRight = new Vector3(-18f, 2.78f, -119f); // Posición inicial a la derecha
     public Vector3 sizeIncrease = new Vector3(2f, 10000f, 2f); // Tamaño extra para la fase 2
     public Vector3 finalPosition = new Vector3(-59.4f, 2.78f, -92f); // Posición final arriba y atrás
     public Vector3 startPosition = new Vector3(-59.4f, 2.78f, -119f); // Posición final arriba y atrás
-    
 
     public float horizontalSpeed = 2.0f; // Velocidad de movimiento horizontal
     public float verticalSpeed = 50.0f; // Velocidad de movimiento vertical en fase 2
     public float sizeGrowSpeed = 1.0f; // Velocidad de crecimiento en fase 2
 
-    private int currentPhase = 0; // Fase actual
+    private int currentPhase = 1; // Fase actual
     private Vector3 targetPosition; // Posición objetivo
     private float phaseStartTime; // Tiempo al inicio de cada fase
     private Vector3 initialScale; // Escala inicial del jefe
@@ -22,7 +21,7 @@ public class BossController : MonoBehaviour
 
     void Start()
     {
-        // Configurar posición inicial y escala
+        // Configurar posición inicial bajo tierra y escala
         transform.position = startLeft;
         initialScale = transform.localScale;
         phaseStartTime = Time.time;
@@ -32,28 +31,43 @@ public class BossController : MonoBehaviour
     {
         float elapsedTime = Time.time - phaseStartTime;
 
-        // Cambiar de fase según el tiempo transcurrido
-        if (currentPhase == 0 && elapsedTime >= 10f)
+        // Mover bajo tierra durante los primeros 29 segundos
+        if (Time.time < 30f)
         {
-            currentPhase = 1; // Pasar a la fase de agrandarse y moverse verticalmente
+            transform.position = new Vector3(transform.position.x, -30f, transform.position.z);
+            return;
+        }
+
+        // Subir a la coordenada Y = 2.78 al iniciar el comportamiento
+        if (Time.time >= 30f && Time.time < 40)
+        {
+            transform.position = new Vector3(transform.position.x, 2.78f, transform.position.z);
+            currentPhase = 1; // Pasar a la fase de moverse horizontalmente
             phaseStartTime = Time.time;
         }
-        else if (currentPhase == 1 && elapsedTime >= 10f)
+
+        // Cambiar de fase según el tiempo transcurrido
+        if (currentPhase == 1 && Time.time >= 40f && Time.time < 50) // 29s + 10s
         {
-            currentPhase = 2; // Pasar a la fase final
+            currentPhase = 2; // Pasar a la fase de agrandarse y moverse verticalmente
+            phaseStartTime = Time.time;
+        }
+        else if (currentPhase == 2 && Time.time >= 50f)
+        {
+            currentPhase = 3; // Pasar a la fase final
             phaseStartTime = Time.time;
         }
 
         // Ejecutar el comportamiento de la fase actual
         switch (currentPhase)
         {
-            case 0:
+            case 1:
                 MoverIzquierdaDerecha();
                 break;
-            case 1:
+            case 2:
                 AgrandarseYSubirBajar();
                 break;
-            case 2:
+            case 3:
                 MoverAFinal();
                 break;
         }
